@@ -1,5 +1,5 @@
 import { useEffect, useChannel } from "storybook/preview-api";
-import type { Options, Result } from "src/types";
+import type { Options, Bans } from "src/types";
 import type { DecoratorFunction } from "storybook/internal/types";
 
 import { EVENTS, KEY } from "./constants";
@@ -7,7 +7,7 @@ import { EVENTS, KEY } from "./constants";
 const check = (
   canvas: ParentNode = globalThis.document,
   options: Options,
-): Result => {
+): Bans => {
   const { targetSelector = "input, textarea" } = options;
   const bans = [...canvas.querySelectorAll(targetSelector)].filter(
     (element) => {
@@ -20,9 +20,7 @@ const check = (
   );
   console.log(bans);
 
-  return {
-    bans,
-  };
+  return bans;
 };
 
 export const withBan: DecoratorFunction = (storyFn, context) => {
