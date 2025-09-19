@@ -58,11 +58,11 @@ export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
         >
           {bans.length > 0 ? (
             <Placeholder>
-              <p>The following bans have less than 2 childNodes</p>
+              <p>The following elements has under 16px font size.</p>
               <List
-                items={bans.map((item, index) => ({
-                  title: `item #${index}`,
-                  description: JSON.stringify(item, null, 2),
+                items={bans.map((item) => ({
+                  title: `tag: ${item.element.tagName}, fontSize: ${item.fontSize}`,
+                  description: item.element.outerHTML,
                 }))}
               />
             </Placeholder>

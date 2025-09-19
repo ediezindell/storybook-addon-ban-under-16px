@@ -9,15 +9,14 @@ const check = (
   options: Options,
 ): Bans => {
   const { targetSelector = "input, textarea" } = options;
-  const bans = [...canvas.querySelectorAll(targetSelector)].filter(
-    (element) => {
-      const { fontSize } = window.getComputedStyle(element);
-      const match = fontSize.match(/([0-9.]+)px/);
-      if (!match) return false;
-      const size = +match[1]!;
-      return size < 16;
-    },
-  );
+  const bans = [...canvas.querySelectorAll(targetSelector)]
+    .map((element) => {
+      const fontSizePx = window.getComputedStyle(element).fontSize;
+      const match = fontSizePx.match(/([0-9.]+)px/);
+      const fontSize = match?.[1] ? +match[1] : 0;
+      return { element, fontSize };
+    })
+    .filter(({ fontSize }) => fontSize < 16);
   console.log(bans);
 
   return bans;
