@@ -20,7 +20,7 @@ const check = (
   canvas: ParentNode = globalThis.document,
   options: Options,
 ): Bans => {
-  const { targetSelector = "input, textarea" } = options;
+  const { targetSelector = "*" } = options;
   const bans = [...canvas.querySelectorAll(targetSelector)]
     .map((element) => {
       const fontSizePx = window.getComputedStyle(element).fontSize;
