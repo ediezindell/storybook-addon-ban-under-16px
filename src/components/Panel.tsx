@@ -1,5 +1,5 @@
 import React, { Fragment, memo, useCallback, useState } from "react";
-import { Result } from "src/types";
+import type { Result } from "src/types";
 import { AddonPanel } from "storybook/internal/components";
 import { Button, Placeholder, TabsState } from "storybook/internal/components";
 import { useChannel } from "storybook/manager-api";
@@ -20,9 +20,8 @@ export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
   const theme = useTheme();
 
   // https://storybook.js.org/docs/react/addons/addons-api#useaddonstate
-  const [{ divs, styled }, setState] = useState<Result>({
-    divs: [],
-    styled: [],
+  const [{ bans }, setState] = useState<Result>({
+    bans: [],
   });
 
   // https://storybook.js.org/docs/react/addons/addons-api#usechannel
@@ -57,15 +56,15 @@ export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
           </Placeholder>
         </div>
         <div
-          id="div"
-          title={`${divs.length} Divs`}
+          id="ban"
+          title={`${bans.length} bans`}
           color={theme.color.negative}
         >
-          {divs.length > 0 ? (
+          {bans.length > 0 ? (
             <Placeholder>
-              <p>The following divs have less than 2 childNodes</p>
+              <p>The following bans have less than 2 childNodes</p>
               <List
-                items={divs.map((item, index) => ({
+                items={bans.map((item, index) => ({
                   title: `item #${index}`,
                   description: JSON.stringify(item, null, 2),
                 }))}
@@ -73,28 +72,7 @@ export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
             </Placeholder>
           ) : (
             <Placeholder>
-              <p>No divs found</p>
-            </Placeholder>
-          )}
-        </div>
-        <div
-          id="all"
-          title={`${styled.length} All`}
-          color={theme.color.warning}
-        >
-          {styled.length > 0 ? (
-            <Placeholder>
-              <p>The following elements have a style attribute</p>
-              <List
-                items={styled.map((item, index) => ({
-                  title: `item #${index}`,
-                  description: JSON.stringify(item, null, 2),
-                }))}
-              />
-            </Placeholder>
-          ) : (
-            <Placeholder>
-              <p>No styled elements found</p>
+              <p>No bans found</p>
             </Placeholder>
           )}
         </div>

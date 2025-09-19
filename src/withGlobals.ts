@@ -6,25 +6,23 @@ import type {
 } from "storybook/internal/types";
 
 import { KEY } from "./constants";
+import type { Options } from "src/types";
 
 export const withGlobals = (
   StoryFn: StoryFunction<Renderer>,
   context: StoryContext<Renderer>,
 ) => {
   const [globals] = useGlobals();
-  const myAddon = globals[KEY];
+  const options: Options = globals[KEY];
   const canvas = context.canvasElement as ParentNode;
 
-  // Is the addon being used in the docs panel
   const isInDocs = context.viewMode === "docs";
 
   useEffect(() => {
     if (!isInDocs) {
-      addExtraContentToStory(canvas, {
-        myAddon,
-      });
+      addExtraContentToStory(canvas, options);
     }
-  }, [myAddon, isInDocs]);
+  }, [options, isInDocs]);
 
   return StoryFn();
 };

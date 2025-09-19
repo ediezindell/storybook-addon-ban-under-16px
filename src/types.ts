@@ -1,4 +1,9 @@
 export interface Result {
-  divs: DOMRect[];
-  styled: DOMRect[];
+  bans: Element[];
+}
+
+export interface Options {
+  enabled: boolean;
+  maxWidth?: number;
+  targetSelector?: string;
 }
