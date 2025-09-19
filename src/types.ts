@@ -1,5 +1,13 @@
+export type BanElement = {
+  tagName: string;
+  id: string;
+  className: string;
+  outerHTML: string;
+  selector: string;
+};
+
 export type Bans = {
-  element: Element;
+  element: BanElement;
   fontSize: number;
 }[];
 
