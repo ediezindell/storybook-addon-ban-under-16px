@@ -23,7 +23,6 @@
       "import": "./dist/preview.js",
       "require": "./dist/preview.cjs"
     },
-    "./preset": "./dist/preset.cjs",
     "./manager": "./dist/manager.js",
     "./package.json": "./package.json"
   },
@@ -84,9 +83,7 @@
     "previewEntries": [
       "src/preview.ts"
     ],
-    "nodeEntries": [
-      "src/preset.ts"
-    ]
+    "nodeEntries": []
   },
   "storybook": {
     "displayName": "storybook-addon-ban-under-16px",
