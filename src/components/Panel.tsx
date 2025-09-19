@@ -29,7 +29,7 @@ export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
       {bans.length > 0 ? (
         <>
           <p style={{ padding: "10px", margin: 0 }}>
-            The following elements has under 16px font size.
+            The following elements have under 16px font size.
           </p>
           <List
             items={bans.map((item) => ({
