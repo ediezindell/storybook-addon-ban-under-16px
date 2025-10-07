@@ -16,7 +16,7 @@ export const RequestDataButton = styled(Button)({
   marginTop: "1rem",
 });
 
-export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
+export const Panel: React.FC<PanelProps> = memo(function Panel(props) {
   const theme = useTheme();
 
   const [bans, setBans] = useState<Bans>([]);
@@ -39,26 +39,27 @@ export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
       >
         <div id="overview" title="Overview" color={theme.color.positive}>
           <Placeholder>
+            <p>
+              This addon scans for elements with a font-size of less than 16px,
+              which can be an accessibility concern.
+            </p>
+            <p>
+              Violating elements will be highlighted with a red outline in the
+              canvas.
+            </p>
             <Fragment>
-              Addons can gather details about how a story is rendered. This is
-              panel uses a tab pattern. Click the button below to fetch data for
-              the other two tabs.
-            </Fragment>
-            <Fragment>
-              <RequestDataButton onClick={fetchData}>
-                Request data
-              </RequestDataButton>
+              <RequestDataButton onClick={fetchData}>Refresh</RequestDataButton>
             </Fragment>
           </Placeholder>
         </div>
         <div
           id="ban"
-          title={`${bans.length} bans`}
+          title={`${bans.length} Violations`}
           color={theme.color.negative}
         >
           {bans.length > 0 ? (
             <Placeholder>
-              <p>The following elements has under 16px font size.</p>
+              <p>The following elements have a font size under 16px:</p>
               <List
                 items={bans.map((item) => ({
                   title: `tag: ${item.element.tagName}, fontSize: ${item.fontSize}`,
@@ -68,7 +69,7 @@ export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
             </Placeholder>
           ) : (
             <Placeholder>
-              <p>No bans found</p>
+              <p>No elements with a font size under 16px were found.</p>
             </Placeholder>
           )}
         </div>
