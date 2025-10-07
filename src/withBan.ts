@@ -17,7 +17,6 @@ const check = (
       return { element, fontSize };
     })
     .filter(({ fontSize }) => fontSize < 16);
-  console.log(bans);
 
   return bans;
 };
@@ -25,17 +24,40 @@ const check = (
 export const withBan: DecoratorFunction = (storyFn, context) => {
   const options = context.globals[KEY] || {};
   const { enabled } = options;
+  const { targetSelector = "input, textarea" } = options;
 
   const canvasElement = context.canvasElement as ParentNode;
+
+  const runCheck = () => {
+    // Always clear existing highlights before running a new check
+    const allElements = [...canvasElement.querySelectorAll(targetSelector)];
+    allElements.forEach((element) => {
+      if (element instanceof HTMLElement) {
+        element.style.outline = "";
+      }
+    });
+
+    if (enabled) {
+      const bans = check(canvasElement, options);
+      bans.forEach(({ element }) => {
+        if (element instanceof HTMLElement) {
+          element.style.outline = "2px solid red";
+        }
+      });
+      emit(EVENTS.RESULT, bans);
+    } else {
+      // If disabled, ensure panel is empty
+      emit(EVENTS.RESULT, []);
+    }
+  };
+
   const emit = useChannel({
-    [EVENTS.REQUEST]: () => {
-      emit(EVENTS.RESULT, check(canvasElement, options));
-    },
+    [EVENTS.REQUEST]: runCheck,
   });
+
   useEffect(() => {
-    if (!enabled) return; // TODO: targetSelectorでのチェック
-    emit(EVENTS.RESULT, check(canvasElement, options));
-  });
+    runCheck();
+  }, [enabled, context.storyId]);
 
   return storyFn();
 };
